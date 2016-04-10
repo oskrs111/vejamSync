@@ -7,10 +7,13 @@
 QT       += core network
 QT       -= gui
 
+windows{
 #OpenSSL Libraries in Windows
-INCLUDEPATH += "C:/OpenSSL-Win32/include"
-LIBS += -L"C:\OpenSSL-Win32\lib\VC" -llibeay32MD
+INCLUDEPATH += "./../dependences/OpenSSL-Win32/include"
+LIBS += -L"./../dependences/OpenSSL-Win32/lib/VC" -llibeay32MD
+#LIBS += -L"D:/GitHub/dependences/OpenSSL-Win32/lib/MinGW" -leay32
 #OpenSSL Libraries in Windows - END
+}
 
 #OpenSSL Libraries in raspi-linux
 #LIBS += -L"/mnt/rasp-pi-rootfs/usr/local/ssl/lib" -lcrypto

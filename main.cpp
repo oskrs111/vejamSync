@@ -4,8 +4,11 @@
 void vejamLogger(QtMsgType type, const QMessageLogContext &context, const QString &msg)
 {
     QByteArray localMsg = msg.toLocal8Bit();
-    switch (type) {
+    switch (type)
+    {
+
     case QtDebugMsg:
+    case QtInfoMsg:
         localMsg.prepend("DEBUG: ");
         fprintf(stderr, "Debug: %s (%s:%u, %s)\n", localMsg.constData(), context.file, context.line, context.function);
         break;
@@ -34,8 +37,8 @@ void vejamLogger(QtMsgType type, const QMessageLogContext &context, const QStrin
 
 static QtKApplicationParameters* g_appParameters = 0;
 int main(int argc, char *argv[])
-{
-    QCoreApplication a(argc, argv);  
+{    
+    QCoreApplication a(argc, argv);
     g_appParameters = new QtKApplicationParameters(0,QString("vejam"));
 
     if(g_appParameters->fileLoad(false))
@@ -43,13 +46,7 @@ int main(int argc, char *argv[])
             setDefaultParameters();
             QString msg = "No se ha encontrado vejam.cfg!\r\nEstableciendo configuración por defecto.\r\n\r\n";
             msg += "vejam.cfg not found!\r\nSetting default configuration.";
-#ifndef VEJAM_NO_GUI
-            QMessageBox msgBox;
-            msgBox.setText(msg);
-            msgBox.exec();
-#else
             qDebug() << msg;
-#endif
 			a.exit();
     }
 

@@ -1,6 +1,3 @@
-#ifndef VEJAM_NO_GUI
-#include <QMessageBox>
-#endif
 #include <QTimer.h>
 #include <QVariant>
 #include "syncMachine.h"
@@ -26,10 +23,6 @@ void syncMachine::OnSyncMachineRun()
     static int syncTime = 0;
     static QNetworkAccessManager *manager = 0;
     QString url = "";
-
-#ifndef VEJAM_NO_GUI
-    QMessageBox msgBox(this);
-#endif
 	QString msg;
 
     switch(this->m_syncState)
@@ -111,12 +104,7 @@ void syncMachine::OnSyncMachineRun()
 		case sstSyncErrorWrongRealm:	
 			 msg += "Ha ocurrido un error de sincronización.\r\nPor favor reinicie la aplicación vejam para solucionar el probelema.\r\n\r\n";              
 			 msg += "A syncronization error has occurred.\r\nPlease restart vejam application to solve the problem.";
-#ifndef VEJAM_NO_GUI
-				msgBox.setText(msg);				
-				msgBox.exec();
-#else
-                qDebug() << msg;
-#endif
+             qDebug() << msg;
 
 		case sstSyncError:
              this->syncMachineSet(sstGoSync);
@@ -135,8 +123,7 @@ QString syncMachine::getSyncString()
 {    
     QJsonObject json;
     QString enc64;
-	
-	
+		
     json.insert("server-ip",QJsonValue(this->m_lastIpReply));
     json.insert("webkit-port",QJsonValue(this->loadParam(QString("conexion"),QString("webkit-port"))));
     json.insert("mjpeg-port",QJsonValue(this->loadParam(QString("conexion"),QString("mjpeg-port"))));

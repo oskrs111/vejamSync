@@ -24,10 +24,6 @@ void authMachine::OnAuthMachineRun()
     QString url = "";
     QString msg;
 
-#ifndef VEJAM_NO_GUI
-    QMessageBox msgBox(this);
-#endif
-
 	this->m_authInterval = 1;
 	
     switch(this->m_authState)
